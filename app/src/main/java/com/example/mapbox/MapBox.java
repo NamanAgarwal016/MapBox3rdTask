@@ -41,6 +41,7 @@ import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.maps.UiSettings;
 import com.mapbox.mapboxsdk.plugins.annotation.OnSymbolClickListener;
 import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
@@ -115,7 +116,7 @@ public class MapBox extends AppCompatActivity implements
         locationList.add(new LatLng(28.362230, 75.585002));
         locationList.add(new LatLng(28.361645, 75.585753));
 
-        for(int i=0; i<3; i++) {
+        for (int i = 0; i < 3; i++) {
             MarkerOptions options = new MarkerOptions();
             // to customize the marker
             IconFactory iconFactory = IconFactory.getInstance(MapBox.this);
@@ -134,8 +135,6 @@ public class MapBox extends AppCompatActivity implements
         }
 
 
-
-
         // Custom styles can be formed on mapbox and implemented here
         mapboxMap.setStyle(new Style.Builder().fromUri("mapbox://styles/naman016/ck5tn4s750nvn1iqf6ce0osbe"), new Style.OnStyleLoaded() {
             @Override
@@ -150,6 +149,13 @@ public class MapBox extends AppCompatActivity implements
                     showGPSDisabledAlertToUser();
                 }
 
+
+//                UiSettings uiSettings = mapboxMap.getUiSettings();
+//                uiSettings.setAllVelocityAnimationsEnabled(true);
+
+                //diasble logo and attribution of mapbox
+                mapboxMap.getUiSettings().setAttributionEnabled(false);
+                mapboxMap.getUiSettings().setLogoEnabled(false);
 
                 addDestinationIconSymbolLayer(style);
                 mapboxMap.addOnMapClickListener(MapBox.this);
@@ -288,7 +294,7 @@ public class MapBox extends AppCompatActivity implements
     @Override
     public boolean onMapClick(@NonNull LatLng point) {
 
-       //Add marker to the clicked point
+        //Add marker to the clicked point
         Point destinationPoint = Point.fromLngLat(point.getLongitude(), point.getLatitude());
         assert locationComponent.getLastKnownLocation() != null;
         Point originPoint = Point.fromLngLat(locationComponent.getLastKnownLocation().getLongitude(),
@@ -302,7 +308,7 @@ public class MapBox extends AppCompatActivity implements
         //Forms the path to the destination
         getRoute(originPoint, destinationPoint);
         navBtn.setEnabled(true);
-        navBtn.setBackgroundResource(R.color.mapboxBlue);
+        navBtn.setBackgroundResource(R.color.lightBlue);
         return true;
     }
 
